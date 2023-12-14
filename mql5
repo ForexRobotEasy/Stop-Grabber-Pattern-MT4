@@ -1,0 +1,89 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                                    Stop Grabber Pattern MT4                                            |
+//|                                      Copyright 2022, Forex Robot Easy Team                                       |
+//|                       https://www.forexroboteasy.com                                                |
+//+------------------------------------------------------------------+
+#property indicator_chart_window
+#property indicator_buffers 2
+#property indicator_color1 Blue
+#property indicator_color2 Red
+
+double BuyBuffer[];
+double SellBuffer[];
+
+//+------------------------------------------------------------------+
+//| Custom indicator initialization function                         |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+   SetIndexStyle(0, DRAW_ARROW);
+   SetIndexArrow(0, 233);
+   SetIndexBuffer(0, BuyBuffer);
+   SetIndexStyle(1, DRAW_ARROW);
+   SetIndexArrow(1, 234);
+   SetIndexBuffer(1, SellBuffer);
+   
+   return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Custom indicator iteration function                              |
+//+------------------------------------------------------------------+
+int OnCalculate(const int rates_total,
+                const int prev_calculated,
+                const datetime &time[],
+                const double &open[],
+                const double &high[],
+                const double &low[],
+                const double &close[],
+                const long &tick_volume[],
+                const long &volume[],
+                const int &spread[])
+{
+   int limit = rates_total - prev_calculated;
+   
+   for(int i = 0; i < limit; i++)
+   {
+      if(IsStopGrabberPattern(i))
+      {
+         if(IsBuySignal(i))
+         {
+            BuyBuffer[i] = close[i];
+         }
+         else if(IsSellSignal(i))
+         {
+            SellBuffer[i] = close[i];
+         }
+      }
+   }
+   
+   return(rates_total);
+}
+
+//+------------------------------------------------------------------+
+//| Custom function to identify Stop Grabber Pattern                  |
+//+------------------------------------------------------------------+
+bool IsStopGrabberPattern(const int index)
+{
+   // Add code to identify Stop Grabber Pattern based on the description provided
+   return true;
+}
+
+//+------------------------------------------------------------------+
+//| Custom function to generate buy signal                            |
+//+------------------------------------------------------------------+
+bool IsBuySignal(const int index)
+{
+   // Add code to determine buy signal based on the Stop Grabber Pattern
+   return true;
+}
+
+//+------------------------------------------------------------------+
+//| Custom function to generate sell signal                           |
+//+------------------------------------------------------------------+
+bool IsSellSignal(const int index)
+{
+   // Add code to determine sell signal based on the Stop Grabber Pattern
+   return true;
+}
